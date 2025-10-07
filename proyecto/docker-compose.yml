@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: app
+    image: proyecto/app:1.0.0
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=jdbc:mysql://db:3306/bdprys2
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=Bdmayo01
+    depends_on:
+      - db
+  db: 
+    container_name: db
+    image: mysql:8.0  
+    ports: 
+      - 3307:3306
+    environment: 
+      MYSQL_ROOT_PASSWORD: Bdmayo01
+      MYSQL_PASSWORD: Bdmayo01
+      MYSQL_DATABASE: bdprys2
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data: {}
