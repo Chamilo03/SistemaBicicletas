@@ -1,4 +1,4 @@
-package co.edu.unbosque.usuario.dto;
+package co.edu.unbosque.dto;
 
 public class PaymentRequestDTO {
 

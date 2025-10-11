@@ -1,4 +1,4 @@
-package co.edu.unbosque.usuario.service;
+package co.edu.unbosque.service;
 
 import org.springframework.stereotype.Service;
 
@@ -12,11 +12,11 @@ import jakarta.annotation.PostConstruct;
 @Service
 public class StripeService {
 
-	private static final String STRIPE_SECRET_KEY = System.getenv("STRIPE_SECRET_KEY");
+	private static final String secretKey = System.getenv("STRIPE_SECRET_KEY");
 
 	@PostConstruct
 	public void init() {
-		Stripe.apiKey = STRIPE_SECRET_KEY;
+		Stripe.apiKey = secretKey;
 	}
 
 	public String crearSesionPago(String clienteId, Long monto) throws StripeException {
