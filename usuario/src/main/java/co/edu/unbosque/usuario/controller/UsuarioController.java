@@ -82,4 +82,15 @@ public class UsuarioController {
 			return ResponseEntity.status(401).body("Credenciales incorrectas");
 		}
 	}
+
+	@GetMapping(path = "recargarSaldo/{id}")
+	public ResponseEntity<String> recargarSaldo(@PathVariable Long id, @RequestParam double monto) {
+		if (!service.findById(id)) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+		}
+
+		service.recargarSaldo(id, monto);
+		return ResponseEntity.ok("Saldo recargado correctamente");
+	}
+
 }
