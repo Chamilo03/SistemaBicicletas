@@ -75,4 +75,11 @@ public class UsuarioService {
 		return false;
 	}
 
+	@Transactional
+	public Usuario recargarSaldo(Long id, double monto) {
+		Usuario usuario = uRepo.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+		usuario.setSaldo(usuario.getSaldo() + monto);
+		return uRepo.save(usuario);
+	}
+
 }
