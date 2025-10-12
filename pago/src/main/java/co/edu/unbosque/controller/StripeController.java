@@ -29,5 +29,17 @@ public class StripeController {
 			return ResponseEntity.internalServerError().body("Error al crear la sesión de pago: " + e.getMessage());
 		}
 	}
+	@PostMapping("/webhook")
+    public ResponseEntity<String> handleStripeWebhook(@RequestBody String payload) {
+
+        // Simulando que el pago fue exitoso:
+        String correo = "camilocastro8181@gmail.com";
+        Long monto = 50000L;
+
+        // Llamar al servicio de envío de correo
+        stripeService.enviarCorreoDeConfirmacion(correo, monto);
+
+        return ResponseEntity.ok("Notificación enviada correctamente");
+    }
 
 }

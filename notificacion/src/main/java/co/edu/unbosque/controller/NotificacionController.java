@@ -22,18 +22,23 @@ public class NotificacionController {
     @Autowired
     private NotificacionService notificacionService;
 
-    /**
-     * Envía una notificación por correo electrónico al usuario.
-     * @param notificacionDTO información del destinatario y mensaje.
-     * @return mensaje de confirmación o error.
-     */
-    @PostMapping(path ="/enviar")
-    public ResponseEntity<?> enviarNotificacion(@RequestBody NotificacionDTO notificacionDTO) {
+    @PostMapping("/enviar")
+    public ResponseEntity<String> enviar(@RequestBody NotificacionDTO dto) {
         try {
-            notificacionService.enviarCorreo(notificacionDTO);
-            return ResponseEntity.ok("Correo enviado correctamente a " + notificacionDTO.getCorreoDestino());
+            notificacionService.enviarCorreo(dto);
+            return ResponseEntity.ok("Correo enviado correctamente a " + dto.getCorreoDestino());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al enviar el correo: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/crear")
+    public ResponseEntity<String> crear(@RequestBody NotificacionDTO dto) {
+        try {
+            notificacionService.enviarYGuardar(dto);
+            return ResponseEntity.ok("Notificación enviada y guardada correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al enviar o guardar la notificación: " + e.getMessage());
         }
     }
 }

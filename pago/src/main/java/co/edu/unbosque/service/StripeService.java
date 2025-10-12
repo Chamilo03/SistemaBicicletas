@@ -1,18 +1,27 @@
 package co.edu.unbosque.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 
+import co.edu.unbosque.dto.NotificacionDTO;
 import jakarta.annotation.PostConstruct;
 
 @Service
 public class StripeService {
+	@Autowired
+    private RestTemplate restTemplate;
+	@Value("${servicio.notificacion.url}")
+    private String notificacionServiceUrl;
 
-	private static final String secretKey = System.getenv("STRIPE_SECRET_KEY");
+
+	private final String secretKey = System.getenv("STRIPE_SECRET_KEY");
 
 	@PostConstruct
 	public void init() {
@@ -34,4 +43,13 @@ public class StripeService {
 		Session session = Session.create(params);
 		return session.getUrl();
 	}
+
+    public void enviarCorreoDeConfirmacion(String correo, Long monto) {
+        NotificacionDTO dto = new NotificacionDTO();
+        dto.setCorreoDestino(correo);
+        dto.setAsunto("Confirmación de pago");
+        dto.setMensaje("Tu pago por $" + monto + " COP fue exitoso. ¡Gracias por tu compra!");
+
+        restTemplate.postForEntity(notificacionServiceUrl + "/notificacion/crear", dto, String.class);
+    }
 }

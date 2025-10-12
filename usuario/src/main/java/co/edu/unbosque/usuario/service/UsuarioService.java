@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import co.edu.unbosque.usuario.model.Notificacion;
 import co.edu.unbosque.usuario.model.Usuario;
 import co.edu.unbosque.usuario.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
@@ -15,7 +17,15 @@ import jakarta.transaction.Transactional;
 public class UsuarioService {
 
 	@Autowired
+	private RestTemplate restTemplate;
+
+	@Autowired
 	private UsuarioRepository uRepo;
+
+	public List<Notificacion> getNotificaciones(Long usuarioId){
+		List<Notificacion> notificaciones = restTemplate.getForObject("http://localhost:8083/notificacion/usuario/"+ usuarioId, List.class);
+		return notificaciones;
+	}
 
 	@Autowired
 	private PasswordEncoder cifrador;
@@ -38,6 +48,10 @@ public class UsuarioService {
 
 	public void deleteById(Long id) {
 		uRepo.deleteById(id);
+	}
+
+	public Usuario getUsuarioById(Long id){
+		return uRepo.findById(id).orElse(null);
 	}
 
 	public boolean findById(Long id) {
