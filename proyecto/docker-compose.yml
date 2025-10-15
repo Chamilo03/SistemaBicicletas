@@ -5,7 +5,7 @@ services:
     container_name: app
     image: proyecto/app:1.0.0
     build: .
-    ports:
+    ports: 
       - 8081:8081
     environment:
       - DATABASE_URL=jdbc:mysql://db:3306/bdprys2
