@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: appPago
+    image: pago/app:1.0.0
+    build: .
+    ports:
+      - 8084:8084
+    environment:
+      - DATABASE_URL=jdbc:mysql://db:3306/bdprys2
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=Bdmayo01
+    depends_on:
+      - db
+    networks:
+      - microservicios_net
+  db: 
+    container_name: db-pago
+    image: mysql:8.0  
+    ports: 
+      - 3310:3306
+    environment: 
+      MYSQL_ROOT_PASSWORD: Bdmayo01
+      MYSQL_PASSWORD: Bdmayo01
+      MYSQL_DATABASE: bdprys2
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - microservicios_net
+
+volumes:
+  db-data: {}
+
+networks:
+  microservicios_net:
+    external: true
