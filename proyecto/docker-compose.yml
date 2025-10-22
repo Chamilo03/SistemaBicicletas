@@ -8,7 +8,7 @@ services:
     ports: 
       - 8081:8081
     environment:
-      - DATABASE_URL=jdbc:mysql://db:3306/bdprys2
+      - DATABASE_URL=jdbc:mysql://db:3306/bdProyectoSII
       - DATABASE_USERNAME=root
       - DATABASE_PASSWORD=$20Br2002
     depends_on:

@@ -8,9 +8,9 @@ services:
     ports:
       - 8082:8082
     environment:
-      - DATABASE_URL=jdbc:mysql://db:3306/bdprys2
+      - DATABASE_URL=jdbc:mysql://db:3306/bdProyectoSII
       - DATABASE_USERNAME=root
-      - DATABASE_PASSWORD=Bdmayo01
+      - DATABASE_PASSWORD=$20Br2002
     depends_on:
       - db
   db: 
@@ -19,9 +19,9 @@ services:
     ports: 
       - 3308:3306
     environment: 
-      MYSQL_ROOT_PASSWORD: Bdmayo01
-      MYSQL_PASSWORD: Bdmayo01
-      MYSQL_DATABASE: bdprys2
+      MYSQL_ROOT_PASSWORD: $20Br2002
+      MYSQL_PASSWORD: $20Br2002
+      MYSQL_DATABASE: bdProyectoSII
     volumes:
       - db-data:/var/lib/mysql
 
